@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/meaaage',
     name: '给我留言',
-    component: ()=>import("@/components/index")
+    component: ()=>import("@/components/message")
   },
 
 ]

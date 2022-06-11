@@ -8,7 +8,7 @@
                         <el-menu
                                 :default-active="activeIndex"
                                 class="el-menu-demo"
-                                mode="horizontal" @select="handleSelect">
+                                mode="horizontal" @select="handleSelect" router>
                             <template v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden">
                                 <el-menu-item :index="item.path" :key="item.path">{{item.name}}</el-menu-item>
                             </template>
@@ -52,8 +52,8 @@
         <el-container>
             <el-aside>aside</el-aside>
             <el-main>
-            <div style="background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;">
-                <el-descriptions class="margin-top" title="带边框列表" :column="3" :size="size" border>
+            <div style="background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
+                <el-descriptions class="margin-top" title="带边框列表" :column="3" :size="size" border  >
                     <template slot="title">
 
                         <div class="grid-content bg-purple">
@@ -61,22 +61,23 @@
                         </div>
                     </template>
                     <template slot="extra">
-                        <el-button type="primary" size="small">操作</el-button>
+                        <el-button type="primary" size="small" @click="czbtn">操作</el-button>
                     </template>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-user"></i>
                             用户名
                         </template>
-                        kooriookami
+                        {{brotext.name}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-mobile-phone"></i>
                             手机号
                         </template>
-                        18100000000
+                        {{brotext.price}}
                     </el-descriptions-item>
+
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-location-outline"></i>
@@ -111,10 +112,18 @@
 <script>
     export default {
         name: "index",
+        created() {
+            let _this=this
+            this.$ajax.get("book/findById/6").then(function (resp) {
+                _this.brotext=resp.data
+
+            })
+        },
         data() {
             return {
                 activeIndex: '1',
-                size:''
+                size:'',
+                brotext:''
             };
         },
         methods: {
@@ -123,6 +132,11 @@
             },
             handleCommand(command) {
                 this.$message('click on item ' + command);
+            },
+            czbtn(){
+                let _this=this
+                _this.$router.push('/meaaage')
+
             }
         }
     }
