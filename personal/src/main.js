@@ -18,7 +18,7 @@ Vue.use(VueAwesomeSwiper, /* { default global options } */)
 
 
 Vue.config.productionTip = false
-axios.defaults.baseURL="http://127.0.0.1:8181/";
+axios.defaults.baseURL="http://localhost:8181/";
 Vue.prototype.$ajax=axios;
 
 
