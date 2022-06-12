@@ -11,10 +11,15 @@ const routes = [
     component: ()=>import("@/components/index")
   },
   {
-    path: '/meaaage',
+    path: '/message',
     name: '给我留言',
-    component: ()=>import("@/components/message")
+    component: ()=>import("@/components/Message")
   },
+  {
+    path: '/forme',
+    name: '关于我',
+    component: ()=>import("@/components/autome")
+  }
 
 ]
 

@@ -6,28 +6,20 @@
                     <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
                     <el-col :span="16">
                         <el-menu
-                                :default-active="activeIndex"
+                                :default-active="$route.path"
                                 class="el-menu-demo"
                                 mode="horizontal" @select="handleSelect" router>
                             <template v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden">
                                 <el-menu-item :index="item.path" :key="item.path">{{item.name}}</el-menu-item>
                             </template>
-                        <el-menu-item index="1">处理中心</el-menu-item>
-                        <el-submenu index="2">
-                            <template slot="title">我的工作台</template>
-                            <el-menu-item index="2-1">选项1</el-menu-item>
-                            <el-menu-item index="2-2">选项2</el-menu-item>
-                            <el-menu-item index="2-3">选项3</el-menu-item>
-                            <el-submenu index="2-4">
-                                <template slot="title">选项4</template>
-                                <el-menu-item index="2-4-1">选项1</el-menu-item>
-                                <el-menu-item index="2-4-2">选项2</el-menu-item>
-                                <el-menu-item index="2-4-3">选项3</el-menu-item>
-                            </el-submenu>
-                        </el-submenu>
-                        <el-menu-item index="3" disabled>消息中心</el-menu-item>
-                        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+
                     </el-menu>
+
+
+
+
+
+
                     </el-col>
                     <el-col :span="4">
 
@@ -49,10 +41,10 @@
                 </el-row>
             </template>
         </el-header>
-        <el-container>
+        <el-container class="content">
             <el-aside>aside</el-aside>
             <el-main>
-            <div style="background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
+            <div style="background-color: white;box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
                 <el-descriptions class="margin-top" title="带边框列表" :column="3" :size="size" border  >
                     <template slot="title">
 
@@ -105,7 +97,7 @@
 
             </el-main>
         </el-container>
-        <el-footer>footer</el-footer>
+        <el-footer class="footer">footer</el-footer>
     </el-container>
 </template>
 
@@ -135,7 +127,7 @@
             },
             czbtn(){
                 let _this=this
-                _this.$router.push('/meaaage')
+                _this.$router.push('/message')
 
             }
         }
@@ -163,11 +155,6 @@
         text-align: center;
         line-height: 160px;
     }
-
-    body > .el-container {
-        margin-bottom: 40px;
-    }
-
     .el-container:nth-child(5) .el-aside,
     .el-container:nth-child(6) .el-aside {
         line-height: 260px;
@@ -178,10 +165,8 @@
     }
     .el-row {
         margin-bottom: 20px;
-    &:last-child {
-         margin-bottom: 0;
-     }
     }
+
     .el-col {
         border-radius: 4px;
     }
@@ -222,4 +207,11 @@
     .box-card {
         width: 480px;
     }
+    .content {
+         min-height: calc(100vh - 140px);
+     }
+    .footer {
+        height: 50px;
+    }
+
 </style>
