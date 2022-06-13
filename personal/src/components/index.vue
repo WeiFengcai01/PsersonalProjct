@@ -45,13 +45,8 @@
             <el-aside>aside</el-aside>
             <el-main>
             <div style="background-color: white;box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
-                <el-descriptions class="margin-top" title="带边框列表" :column="3" :size="size" border  >
-                    <template slot="title">
+                <el-descriptions title="个人信息" :column="3" border  >
 
-                        <div class="grid-content bg-purple">
-                                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-                        </div>
-                    </template>
                     <template slot="extra">
                         <el-button type="primary" size="small" @click="czbtn">操作</el-button>
                     </template>
@@ -95,6 +90,37 @@
 
             </div>
 
+                <el-row>
+                    <el-col :sm="12" :lg="6">
+                        <el-result icon="success" title="成功提示" subTitle="请根据提示进行操作">
+                            <template slot="extra">
+                                <el-button type="primary" size="medium">返回</el-button>
+                            </template>
+                        </el-result>
+                    </el-col>
+                    <el-col :sm="12" :lg="6">
+                        <el-result icon="warning" title="警告提示" subTitle="请根据提示进行操作">
+                            <template slot="extra">
+                                <el-button type="primary" size="medium">返回</el-button>
+                            </template>
+                        </el-result>
+                    </el-col>
+                    <el-col :sm="12" :lg="6">
+                        <el-result icon="error" title="错误提示" subTitle="请根据提示进行操作">
+                            <template slot="extra">
+                                <el-button type="primary" size="medium">返回</el-button>
+                            </template>
+                        </el-result>
+                    </el-col>
+                    <el-col :sm="12" :lg="6">
+                        <el-result icon="info" title="信息提示" subTitle="请根据提示进行操作">
+                            <template slot="extra">
+                                <el-button type="primary" size="medium">返回</el-button>
+                            </template>
+                        </el-result>
+                    </el-col>
+                </el-row>
+
             </el-main>
         </el-container>
         <el-footer class="footer">footer</el-footer>
@@ -115,7 +141,7 @@
         data() {
             return {
                 activeIndex: '1',
-                size:'',
+
                 brotext:''
             };
         },
@@ -213,6 +239,18 @@
      }
     .footer {
         height: 50px;
+    }
+    .el-main[data-v-47323bf2] {
+        background-color: #E9EEF3;
+        color: #333;
+        text-align: center;
+        line-height: -1px;
+    }
+    .el-main[data-v-47323bf2] {
+        background-color: #E9EEF3;
+        color: #333;
+        text-align: center;
+        line-height: -1px;
     }
 
 </style>

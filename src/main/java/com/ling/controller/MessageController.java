@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.management.ManagementFactory;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 @Controller
 @RequestMapping("/message")
@@ -32,14 +38,45 @@ public class MessageController {
 
         return this.messageService.list();
     }
-
-    @GetMapping("/server_info")
-    @ResponseBody
-    public void server_info(){
-        System.out.println("server_info");
-        return ;
-    }
-
+//
+//    @GetMapping("/server_info")
+//    @ResponseBody
+//    public String server_info() throws IOException, InterruptedException {
+//
+//            Process process = Runtime.getRuntime().exec("cmd /c net statistics workstation");
+//
+//            String startUpTime = "";
+//
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//
+//            int i = 0;
+//
+//            String timeWith = "";
+//
+//            while ((timeWith = bufferedReader.readLine()) != null) {
+//                if (i == 3) {
+//                    System.out.println(timeWith);
+//
+//                    startUpTime = timeWith;
+//
+//                }
+//
+//                i++;
+//
+//            }
+//
+//            process.waitFor();
+//
+//            return startUpTime;
+//
+//        }
+//    @GetMapping("/list")
+//    @ResponseBody
+//    public Data server_info(){
+//        long time= ManagementFactory.getRuntimeMXBean().getStartTime();
+//        Data data = new Data(time);
+//        return data;
+//    }
 
 
     @PostMapping("/agree")
