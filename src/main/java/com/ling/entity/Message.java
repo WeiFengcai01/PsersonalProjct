@@ -26,5 +26,9 @@ public class Message implements Serializable {
 
     private String content;
 
+    private int agree;
+
+    private  int disagree;
+
 
 }

@@ -62,7 +62,7 @@
               <img
                 class="mil_item_img"
                 @click="agree(item)"
-                src="https://my-homepage-1302786361.cos.ap-guangzhou.myqcloud.com/images/flower.png"
+                src="https://img2.baidu.com/it/u=3563355710,610829362&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=400"
                 alt
               />
               <p class="mil_item_text">言之有理？送一束花</p>
@@ -72,7 +72,7 @@
               <img
                 class="mil_item_img"
                 @click="disagree(item)"
-                src="https://my-homepage-1302786361.cos.ap-guangzhou.myqcloud.com/images/tomato.png"
+                src="https://img1.baidu.com/it/u=3774984617,214465278&fm=253&fmt=auto&app=138&f=JPEG?w=260&h=260"
                 alt
               />
               <p class="mil_item_text">觉得不对？扔个番茄</p>
@@ -84,6 +84,7 @@
           background
           layout="prev, pager, next"
           :total="allMessageList.length"
+
           @current-change="handleChange"
         ></el-pagination>
       </div>
@@ -123,7 +124,7 @@ export default {
           id: item.id,
         })
         .then((res) => {
-          if (res.data.msg == "agree_success") {
+          if (res.data.msg) {
             item.agree++;
           }
         });
@@ -134,12 +135,13 @@ export default {
           id: item.id,
         })
         .then((res) => {
-          if (res.data.msg == "disagree_success") {
-            item.disagree++;
+          if (res.data!=null){
+          location.reload()
           }
         });
     },
     submitMessage() {
+      let _this=this
       if (this.messageForm.name == "" || this.messageForm.content == "") {
         return this.$message(
           "给我留言的话，至少要告诉我你的昵称和留言的内容哦"
@@ -163,36 +165,52 @@ export default {
         })
         .then((res) => {
           this.submiting = false;
-          if (res.data.msg == "leave_message_success") {
+
             this.$message.success("留言成功，后台审核通过后会展示在留言板");
             this.messageForm.name = "";
             this.messageForm.email = "";
             this.messageForm.content = "";
-          }
+            // location.reload()
+            this.$router.go(0)
+
+
         });
     },
   },
   created() {
-    // 获取回复列表以及服务开始运行时间
-    Promise.all([
-      this.$ajax.get("message/server_info"),
-      this.$ajax.get("message/list"),
-    ]).then((res) => {
-      // 根据服务开始运行时间确定运行了多久
-      this.start_date = res[0].data.start_date;
-      this.visitor_count = res[0].data.visitor_count;
-      const start_date = new Date(res[0].data.start_date).getTime();
-      const date = new Date().getTime();
-      const time = date - start_date;
-      this.time = time;
-      setInterval(() => {
-        this.time += 1000;
-      }, 1000);
-      this.allMessageList = res[1].data.data;
-      this.showMessageList = res[1].data.data.slice(0, 10);
-      this.loading = false;
-    });
+    let _this=this
+    this.$ajax.get("message/list").then((resp)=>{
+      console.log(resp.data)
+      // this.allMessageList = res[1].data.data;
+
+      _this.allMessageList = resp.data;
+      _this.showMessageList = resp.data.slice(0,10);
+
+    })
   },
+  // created() {
+  //   let _this=this
+  //   // 获取回复列表以及服务开始运行时间
+  //   Promise.all([
+  //     this.$ajax.get("message/server_info"),
+  //     this.$ajax.get("message/list"),
+  //   ]).then((res) => {
+  //     // 根据服务开始运行时间确定运行了多久
+  //     this.start_date = res[0].data.start_date;
+  //     this.visitor_count = res[0].data.visitor_count;
+  //     const start_date = new Date(res[0].data.start_date).getTime();
+  //     const date = new Date().getTime();
+  //     const time = date - start_date;
+  //     this.time = time;
+  //     setInterval(() => {
+  //       this.time += 1000;
+  //     }, 1000);
+  //     // this.allMessageList = res[1].data.data;
+  //     // this.showMessageList = res[1].data.slice(0, 10);
+  //     this.loading = false;
+  //     console.log(res.date)
+  //   });
+  // },
   filters: {
     // 将留言时间格式化
     dateFormat: (time) => {

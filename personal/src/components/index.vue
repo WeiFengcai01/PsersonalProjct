@@ -106,7 +106,8 @@
         name: "index",
         created() {
             let _this=this
-            this.$ajax.get("book/findById/6").then(function (resp) {
+            this.$ajax.get("book/findById/6").then( (resp)=> {
+                console.log(resp.data)
                 _this.brotext=resp.data
 
             })
