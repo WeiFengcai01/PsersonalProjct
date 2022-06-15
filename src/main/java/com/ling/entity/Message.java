@@ -1,13 +1,13 @@
 package com.ling.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
-
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,6 +29,9 @@ public class Message implements Serializable {
     private int agree;
 
     private  int disagree;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Date time;
 
 
 }

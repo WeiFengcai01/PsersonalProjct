@@ -1,19 +1,18 @@
 package com.ling.controller;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ling.entity.Message;
 import com.ling.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 @Controller
 @RequestMapping("/message")
@@ -21,11 +20,11 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
-    private Object Message;
 
     @PostMapping("/comment")
     @ResponseBody
     public boolean comment(@RequestBody Message message){
+
         System.out.println(message);
         return messageService.save(message);
     }
@@ -37,65 +36,62 @@ public class MessageController {
 //        System.out.println(messageService.list());
 
         return this.messageService.list();
+
+
     }
 //
-//    @GetMapping("/server_info")
-//    @ResponseBody
-//    public String server_info() throws IOException, InterruptedException {
-//
-//            Process process = Runtime.getRuntime().exec("cmd /c net statistics workstation");
-//
-//            String startUpTime = "";
-//
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//
-//            int i = 0;
-//
-//            String timeWith = "";
-//
-//            while ((timeWith = bufferedReader.readLine()) != null) {
-//                if (i == 3) {
-//                    System.out.println(timeWith);
-//
-//                    startUpTime = timeWith;
-//
-//                }
-//
-//                i++;
-//
-//            }
-//
-//            process.waitFor();
-//
-//            return startUpTime;
-//
-//        }
-//    @GetMapping("/list")
-//    @ResponseBody
-//    public Data server_info(){
-//        long time= ManagementFactory.getRuntimeMXBean().getStartTime();
-//        Data data = new Data(time);
-//        return data;
-//    }
+    @GetMapping("/server_info")
+    @ResponseBody
+    public String server_info(){
+        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
+        System.out.println(new Date(time));
+
+        String str = JSON.toJSONStringWithDateFormat(new Date(time),"yyyy-MM-dd HH:mm:ss");
+        return str;
+
+        }
+
 
 
     @PostMapping("/agree")
     @ResponseBody
-    private UpdateWrapper update(@RequestBody Message message){
-        System.out.println("agree");
-//        return this.messageService.update(Wrappers.update(Message).setSql("`read_count`=`read_count`+1"));
-        UpdateWrapper wrapper = new UpdateWrapper();
-        wrapper.eq("id",message.getAgree());
-        wrapper.setSql("'agree' = 'agree' + 1");
+    private boolean update(@RequestBody Message message) {
+        System.out.println("id="+message.getId());
+        System.out.println("agger="+message.getAgree());
+        System.out.println("disagree="+message.getDisagree());
+
+        System.out.println(message);
 
 
-        messageService.update(wrapper);
-        return wrapper;
-
-
-
-
+        Message message1 = new Message();
+        message1.setId(message.getId());
+        message1.setDisagree(message.getDisagree());
+        message1.setAgree(message.getAgree()+1);
+//        return true;
+        return messageService.updateById(message1);
     }
+
+
+
+    @PostMapping("/disagree")
+    @ResponseBody
+    private boolean updatedisagree(@RequestBody Message message) {
+        System.out.println("id="+message.getId());
+        System.out.println("agger="+message.getAgree());
+        System.out.println("disagree="+message.getDisagree());
+
+        System.out.println(message);
+
+
+        Message message1 = new Message();
+        message1.setId(message.getId());
+        message1.setDisagree(message.getDisagree()+1);
+        message1.setAgree(message.getAgree());
+//        return true;
+        return messageService.updateById(message1);
+    }
+
+
 
 
 }

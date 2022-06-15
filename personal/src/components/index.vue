@@ -45,7 +45,7 @@
             <el-aside>aside</el-aside>
             <el-main>
             <div style="background-color: white;box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
-                <el-descriptions title="个人信息" :column="3" border  >
+                <el-descriptions title="个人信息" :column="3" border  size="medium ">
 
                     <template slot="extra">
                         <el-button type="primary" size="small" @click="czbtn">操作</el-button>

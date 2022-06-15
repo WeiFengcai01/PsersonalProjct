@@ -14,7 +14,7 @@
           <p>欢迎</p>
           <p>很高兴可以在这个网站运行的</p>
           <p>第{{time|timeFormat}}遇见你</p>
-          <p>你是运行以来的第{{visitor_count}}位访客</p>
+          <p v-model="allMessageList">你是运行以来的第{{allMessageList.length+1}}位访客</p>
           <p>在这里你可以畅所欲言</p>
           <p>或者看看别人有什么想法</p>
         </div>
@@ -82,7 +82,7 @@
         </div>
         <el-pagination
           background
-          layout="prev, pager, next"
+          layout="total, prev, pager, next, jumper"
           :total="allMessageList.length"
 
           @current-change="handleChange"
@@ -122,23 +122,26 @@ export default {
       this.$ajax
         .post("message/agree", {
           id: item.id,
+          disagree: item.disagree,
+          agree: item.agree,
         })
         .then((res) => {
-          if (res.data.msg) {
-            item.agree++;
-          }
+
+            location.reload()
+
         });
     },
     disagree(item) {
       this.$ajax
         .post("message/disagree", {
           id: item.id,
+          agree: item.agree,
+          disagree: item.disagree,
         })
-        .then((res) => {
-          if (res.data!=null){
-          location.reload()
-          }
-        });
+              .then((res) => {
+
+                location.reload()
+              });
     },
     submitMessage() {
       let _this=this
@@ -178,39 +181,38 @@ export default {
     },
   },
   created() {
-    let _this=this
-    this.$ajax.get("message/list").then((resp)=>{
-      console.log(resp.data)
-      // this.allMessageList = res[1].data.data;
+    // let _this=this
+    //   this.$ajax.get("message/list").then((resp)=>{
+    //   console.log(resp.data)
+    //   // this.allMessageList = res[1].data.data;
+    //
+    //   _this.allMessageList = resp.data;
+    //   _this.showMessageList = resp.data.slice(0,10);
+    //
+    // })
+    Promise.all([
+      this.$ajax.get("message/list"),
+      this.$ajax.get("message/server_info")
+    ]).then(result =>{
+      this.allMessageList=result[0].data;
+      this.showMessageList=result[0].data.slice(0,10);
+      console.log(result[1].data)
+      // 根据服务开始运行时间确定运行了多久
+      this.start_date = result[1].data;
+      const start_date = new Date(result[1].data).getTime();
+      const date = new Date().getTime();
+      const time = date - start_date;
+      this.time = time;
+      setInterval(() => {
+        this.time += 1000;
+      }, 1000);
 
-      _this.allMessageList = resp.data;
-      _this.showMessageList = resp.data.slice(0,10);
 
-    })
+    });
+
+
   },
-  // created() {
-  //   let _this=this
-  //   // 获取回复列表以及服务开始运行时间
-  //   Promise.all([
-  //     this.$ajax.get("message/server_info"),
-  //     this.$ajax.get("message/list"),
-  //   ]).then((res) => {
-  //     // 根据服务开始运行时间确定运行了多久
-  //     this.start_date = res[0].data.start_date;
-  //     this.visitor_count = res[0].data.visitor_count;
-  //     const start_date = new Date(res[0].data.start_date).getTime();
-  //     const date = new Date().getTime();
-  //     const time = date - start_date;
-  //     this.time = time;
-  //     setInterval(() => {
-  //       this.time += 1000;
-  //     }, 1000);
-  //     // this.allMessageList = res[1].data.data;
-  //     // this.showMessageList = res[1].data.slice(0, 10);
-  //     this.loading = false;
-  //     console.log(res.date)
-  //   });
-  // },
+
   filters: {
     // 将留言时间格式化
     dateFormat: (time) => {
