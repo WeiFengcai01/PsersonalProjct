@@ -13,7 +13,7 @@ import java.util.TimeZone;
 public class PersonalApplication {
     public static void main(String[] args) {
         SpringApplication.run(PersonalApplication.class,args);
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+9"));
     }
 
 }

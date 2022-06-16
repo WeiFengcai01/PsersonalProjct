@@ -41,89 +41,167 @@
                 </el-row>
             </template>
         </el-header>
+        <div style="width: 1370px;margin: 10px auto;border-radius: 4px;">
         <el-container class="content">
-            <el-aside>aside</el-aside>
-            <el-main>
-            <div style="background-color: white;box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
-                <el-descriptions title="个人信息" :column="3" border  size="medium ">
-
-                    <template slot="extra">
-                        <el-button type="primary" size="small" @click="czbtn">操作</el-button>
-                    </template>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <i class="el-icon-user"></i>
-                            用户名
-                        </template>
-                        {{brotext.name}}
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <i class="el-icon-mobile-phone"></i>
-                            手机号
-                        </template>
-                        {{brotext.price}}
-                    </el-descriptions-item>
-
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <i class="el-icon-location-outline"></i>
-                            居住地
-                        </template>
-                        苏州市
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <i class="el-icon-tickets"></i>
-                            备注
-                        </template>
-                        <el-tag size="small">学校</el-tag>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                        <template slot="label">
-                            <i class="el-icon-office-building"></i>
-                            联系地址
-                        </template>
-                        江苏省苏州市吴中区吴中大道 1188 号
-                    </el-descriptions-item>
-                </el-descriptions>
-
-            </div>
-
+            <el-header style="height: 150px;margin: 16px">
                 <el-row>
-                    <el-col :sm="12" :lg="6">
-                        <el-result icon="success" title="成功提示" subTitle="请根据提示进行操作">
-                            <template slot="extra">
-                                <el-button type="primary" size="medium">返回</el-button>
-                            </template>
-                        </el-result>
-                    </el-col>
-                    <el-col :sm="12" :lg="6">
-                        <el-result icon="warning" title="警告提示" subTitle="请根据提示进行操作">
-                            <template slot="extra">
-                                <el-button type="primary" size="medium">返回</el-button>
-                            </template>
-                        </el-result>
-                    </el-col>
-                    <el-col :sm="12" :lg="6">
-                        <el-result icon="error" title="错误提示" subTitle="请根据提示进行操作">
-                            <template slot="extra">
-                                <el-button type="primary" size="medium">返回</el-button>
-                            </template>
-                        </el-result>
-                    </el-col>
-                    <el-col :sm="12" :lg="6">
-                        <el-result icon="info" title="信息提示" subTitle="请根据提示进行操作">
-                            <template slot="extra">
-                                <el-button type="primary" size="medium">返回</el-button>
-                            </template>
-                        </el-result>
-                    </el-col>
+                    <el-col :span="5"><div class="demo-basic--circle">
+                        <div class="block"><el-avatar :size="150" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></div>
+                        <div class="block" v-for="size in sizeList" :key="size">
+                            <el-avatar :size="size" :src="circleUrl"></el-avatar>
+                        </div>
+                    </div></el-col>
+                    <el-col :span="19"><div class="grid-content bg-purple-light"><p>
+                        个人主页是从英文Personal Homepage翻译而来，更适合的意思是"属于个人的网站"。就内容而言，个人站点所提供的多半是纯文字或图片等静态信息，而就站点的性质来说，则以教学或特定主题（如历史、古典文学、电玩、旅游记录等）的站台为多数。然而，经过多年的...
+                    </p></div></el-col>
                 </el-row>
+            </el-header>
+            <el-container  style="height: 64.5vh">
+                <el-aside style="margin-right: 10px;">
+                    <el-menu
+                        default-active="2"
+                        class="el-menu-vertical-demo"
+                        @open="handleOpen"
+                        @close="handleClose"
+                        background-color="#545c64"
+                        text-color="#fff"
+                        active-text-color="#ffd04b">
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>导航一</span>
+                        </template>
+                        <el-menu-item-group>
+                            <template slot="title">分组一</template>
+                            <el-menu-item index="1-1">选项1</el-menu-item>
+                            <el-menu-item index="1-2">选项2</el-menu-item>
+                        </el-menu-item-group>
+                        <el-menu-item-group title="分组2">
+                            <el-menu-item index="1-3">选项3</el-menu-item>
+                        </el-menu-item-group>
+                        <el-submenu index="1-4">
+                            <template slot="title">选项4</template>
+                            <el-menu-item index="1-4-1">选项1</el-menu-item>
+                        </el-submenu>
+                    </el-submenu>
+                    <el-menu-item index="2">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">导航二</span>
+                    </el-menu-item>
+                    <el-menu-item index="3" disabled>
+                        <i class="el-icon-document"></i>
+                        <span slot="title">导航三</span>
+                    </el-menu-item>
+                    <el-menu-item index="4">
+                        <i class="el-icon-setting"></i>
+                        <span slot="title">导航四</span>
+                    </el-menu-item>
+                </el-menu></el-aside>
+                <el-main>
+                    <div style="background-color: white;box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 0 6px rgba(0, 0, 0, .04);padding:30px;" v-model="brotext">
 
-            </el-main>
+                        <el-descriptions class="margin-top" title="带边框列表" :column="4" :size="size" border style="height: 400px">
+                            <template slot="title">
+                                <el-row>
+                                    <el-col :span="12">
+                                        <el-avatar :size="70" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                                    </el-col>
+                                    <el-col :span="12">66666</el-col>
+                                </el-row>
+                            </template>
+                            <template slot="extra">
+                                <el-button type="primary" size="small">操作</el-button>
+                            </template>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-user"></i>
+                                    用户名
+                                </template>
+                                kooriookami
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-mobile-phone"></i>
+                                    手机号
+                                </template>
+                                18100000000
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-location-outline"></i>
+                                    居住地
+                                </template>
+                                苏州市
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-location-outline"></i>
+                                    居住地
+                                </template>
+                                苏州市
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-location-outline"></i>
+                                    居住地
+                                </template>
+                                苏州市
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-location-outline"></i>
+                                    居住地
+                                </template>
+                                苏州市
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-location-outline"></i>
+                                    居住地
+                                </template>
+                                苏州市
+                            </el-descriptions-item>
+
+
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-tickets"></i>
+                                    备注
+                                </template>
+                                <el-tag size="small">学校</el-tag>
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-office-building"></i>
+                                    联系地址
+                                </template>
+                                江苏省苏州市吴中区吴中大道 1188 号
+                            </el-descriptions-item>           <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-office-building"></i>
+                                    联系地址
+                                </template>
+                                江苏省苏州市吴中区吴中大道 1188 号
+                            </el-descriptions-item>           <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-office-building"></i>
+                                    联系地址
+                                </template>
+                                江苏省苏州市吴中区吴中大道 1188 号
+                            </el-descriptions-item>
+                        </el-descriptions>
+
+                    </div>
+
+
+
+                </el-main>
+            </el-container>
         </el-container>
-        <el-footer class="footer">footer</el-footer>
+        </div>
+        <el-footer class="footer">
+            <div>联系我</div>
+        </el-footer>
     </el-container>
 </template>
 
@@ -141,7 +219,7 @@
         data() {
             return {
                 activeIndex: '1',
-
+                size:"medium",
                 brotext:''
             };
         },
@@ -170,39 +248,15 @@
     }
 
     .el-aside {
-        background-color: #D3DCE6;
+        background-color: #545c64;
         color: #333;
-        text-align: center;
-        line-height: 200px;
+
     }
 
-    .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        text-align: center;
-        line-height: 160px;
-    }
-    .el-container:nth-child(5) .el-aside,
-    .el-container:nth-child(6) .el-aside {
-        line-height: 260px;
-    }
 
-    .el-container:nth-child(7) .el-aside {
-        line-height: 320px;
-    }
-    .el-row {
-        margin-bottom: 20px;
-    }
 
-    .el-col {
-        border-radius: 4px;
-    }
-    .bg-purple-dark {
-        background: #99a9bf;
-    }
-    .bg-purple {
-        background: #d3dce6;
-    }
+
+
     .bg-purple-light {
         background: #e5e9f2;
     }
@@ -210,33 +264,7 @@
         border-radius: 4px;
         min-height: 36px;
     }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
-    }
-    .text {
-        font-size: 14px;
-    }
 
-    .item {
-        margin-bottom: 18px;
-    }
-
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
-    .clearfix:after {
-        clear: both
-    }
-
-    .box-card {
-        width: 480px;
-    }
-    .content {
-         min-height: calc(100vh - 140px);
-     }
     .footer {
         height: 50px;
     }

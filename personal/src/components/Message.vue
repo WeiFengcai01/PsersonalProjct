@@ -97,16 +97,16 @@ export default {
   name: "message",
   data() {
     return {
+
+
+
       messageForm: {
         name: "",
         email: "",
         content: "",
       },
-      loading: true,
       submiting: false,
       time: 0,
-      start_date: "",
-      visitor_count: 0,
       allMessageList: [],
       showMessageList: [],
     };
@@ -137,11 +137,10 @@ export default {
           id: item.id,
           agree: item.agree,
           disagree: item.disagree,
-        })
-              .then((res) => {
+        }).then((res) => {
 
                 location.reload()
-              });
+         });
     },
     submitMessage() {
       let _this=this
@@ -165,31 +164,19 @@ export default {
       this.$ajax
         .post("message/comment", {
           ...this.messageForm,
-        })
-        .then((res) => {
+        }).then((res) => {
           this.submiting = false;
-
-            this.$message.success("留言成功，后台审核通过后会展示在留言板");
-            this.messageForm.name = "";
-            this.messageForm.email = "";
-            this.messageForm.content = "";
-            // location.reload()
-            this.$router.go(0)
+          this.$message.success("留言成功，后台审核通过后会展示在留言板");
+          this.messageForm.name = "";
+          this.messageForm.email = "";
+          this.messageForm.content = "";
+          this.$router.go(0)
 
 
         });
     },
   },
   created() {
-    // let _this=this
-    //   this.$ajax.get("message/list").then((resp)=>{
-    //   console.log(resp.data)
-    //   // this.allMessageList = res[1].data.data;
-    //
-    //   _this.allMessageList = resp.data;
-    //   _this.showMessageList = resp.data.slice(0,10);
-    //
-    // })
     Promise.all([
       this.$ajax.get("message/list"),
       this.$ajax.get("message/server_info")
@@ -198,7 +185,6 @@ export default {
       this.showMessageList=result[0].data.slice(0,10);
       console.log(result[1].data)
       // 根据服务开始运行时间确定运行了多久
-      this.start_date = result[1].data;
       const start_date = new Date(result[1].data).getTime();
       const date = new Date().getTime();
       const time = date - start_date;
