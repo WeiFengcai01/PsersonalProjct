@@ -7,89 +7,131 @@
  * @Description: 留言页
 -->
 <template>
-  <div>
-    <div class="info">
-      <div class="info_board">
-        <div class="info_board_title">
-          <p>欢迎</p>
-          <p>很高兴可以在这个网站运行的</p>
-          <p>第{{time|timeFormat}}遇见你</p>
-          <p v-model="allMessageList">你是运行以来的第{{allMessageList.length+1}}位访客</p>
-          <p>在这里你可以畅所欲言</p>
-          <p>或者看看别人有什么想法</p>
-        </div>
-        <hr />
-        <div class="info_board_form">
-          <el-form label-position="top" :model="messageForm">
-            <el-form-item label="请告诉我该如何称呼你">
-              <el-input v-model="messageForm.name" placeholder="请输入你的昵称"></el-input>
-            </el-form-item>
-            <el-form-item label="方便的话可以留个邮箱">
-              <el-input v-model="messageForm.email" placeholder="请输入你的邮箱"></el-input>
-            </el-form-item>
-            <el-form-item label="然后告诉我你想说什么吧">
-              <el-input
-                type="textarea"
-                v-model="messageForm.content"
-                placeholder="你也来说两句吧！在此输入留言内容"
-              ></el-input>
-            </el-form-item>
-            <p class="tip">隐私说明：你的昵称以及留言内容会被公开展示，但邮箱不会</p>
-            <el-button
-              type="primary"
-              plain
-              class="btn"
-              @click="submitMessage"
-              :disabled="submiting"
-            >给我留言</el-button>
-          </el-form>
-        </div>
-      </div>
-    </div>
-    <div class="list">
-      <el-button type="primary" plain @click="$router.push('/')">返回</el-button>
-      <h3 class="title">留言板</h3>
-      <p class="title">已有 {{allMessageList.length}} 人留言</p>
-      <div class="message">
-        <div v-for="(item,index) in showMessageList" :key="index" class="message_item">
-          <p class="message_item_name">{{item.name}}</p>
-          <p
-            class="message_item_info"
-          >{{item.time | dateFormat}}{{item.city?' 在 ':''}}{{item.city}} 说：</p>
-          <p class="message_item_content">{{item.content}}</p>
-          <div class="message_item_list">
-            <div class="mil_item">
-              <img
-                class="mil_item_img"
-                @click="agree(item)"
-                src="https://img2.baidu.com/it/u=3563355710,610829362&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=400"
-                alt
-              />
-              <p class="mil_item_text">言之有理？送一束花</p>
-              <p class="mil_item_text">(收到的鲜花数：{{item.agree}})</p>
+  <el-container>
+    <el-drawer
+          title="我是标题"
+          :visible.sync="drawer"
+          :direction="direction"
+          size="300px"
+  >
+    <span>我来啦!</span>
+  </el-drawer>
+
+    <el-header class="nav">
+      <el-row>
+        <el-col :span="1" class="">
+          <div @click="drawer = true">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+          </div>
+        </el-col>
+        <el-col :span="23">
+          <div>
+            <el-menu
+                    :default-active="$route.path"
+                    class="el-menu-demo"
+                    mode="horizontal"
+                    @select="handleSelect" router>
+              <template v-for="item in this.$router.options.routes" v-if="!item.hidden">
+                <el-menu-item :index="item.path" >{{item.name}}</el-menu-item>
+              </template>
+
+
+            </el-menu>
+          </div>
+        </el-col>
+      </el-row>
+
+
+    </el-header>
+
+
+
+    <el-main>
+      <div>
+        <div class="info">
+          <div class="info_board">
+            <div class="info_board_title">
+              <p>欢迎</p>
+              <p>很高兴可以在这个网站运行的</p>
+              <p>第{{time|timeFormat}}遇见你</p>
+              <p>在这里你可以畅所欲言</p>
+              <p>或者看看别人有什么想法</p>
             </div>
-            <div class="mil_item">
-              <img
-                class="mil_item_img"
-                @click="disagree(item)"
-                src="https://img1.baidu.com/it/u=3774984617,214465278&fm=253&fmt=auto&app=138&f=JPEG?w=260&h=260"
-                alt
-              />
-              <p class="mil_item_text">觉得不对？扔个番茄</p>
-              <p class="mil_item_text">(被扔的番茄数：{{item.disagree}})</p>
+            <hr />
+            <div class="info_board_form">
+              <el-form label-position="top" :model="messageForm">
+                <el-form-item label="请告诉我该如何称呼你">
+                  <el-input v-model="messageForm.name" placeholder="请输入你的昵称"></el-input>
+                </el-form-item>
+                <el-form-item label="方便的话可以留个邮箱">
+                  <el-input v-model="messageForm.email" placeholder="请输入你的邮箱"></el-input>
+                </el-form-item>
+                <el-form-item label="然后告诉我你想说什么吧">
+                  <el-input
+                          type="textarea"
+                          v-model="messageForm.content"
+                          placeholder="你也来说两句吧！在此输入留言内容"
+                  ></el-input>
+                </el-form-item>
+                <p class="tip">隐私说明：你的昵称以及留言内容会被公开展示，但邮箱不会</p>
+                <el-button
+                        type="primary"
+                        plain
+                        class="btn"
+                        @click="submitMessage"
+                        :disabled="submiting"
+                >给我留言</el-button>
+              </el-form>
             </div>
           </div>
         </div>
-        <el-pagination
-          background
-          layout="total, prev, pager, next, jumper"
-          :total="allMessageList.length"
+        <div class="list">
+          <el-button type="primary" plain @click="$router.push('/')">返回</el-button>
+          <h3 class="title">留言板</h3>
+          <p class="title">已有 {{allMessageList.length}} 人留言</p>
+          <div class="message">
+            <div v-for="(item,index) in showMessageList" :key="index" class="message_item">
+              <p class="message_item_name">{{item.name}}</p>
+              <p
+                      class="message_item_info"
+              >{{item.time | dateFormat}}{{item.city?' 在 ':''}}{{item.city}} 说：</p>
+              <p class="message_item_content">{{item.content}}</p>
+              <div class="message_item_list">
+                <div class="mil_item">
+                  <img
+                          class="mil_item_img"
+                          @click="agree(item)"
+                          src="https://img2.baidu.com/it/u=3563355710,610829362&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=400"
+                          alt
+                  />
+                  <p class="mil_item_text">言之有理？送一束花</p>
+                  <p class="mil_item_text">(收到的鲜花数：{{item.agree}})</p>
+                </div>
+                <div class="mil_item">
+                  <img
+                          class="mil_item_img"
+                          @click="disagree(item)"
+                          src="https://img1.baidu.com/it/u=3774984617,214465278&fm=253&fmt=auto&app=138&f=JPEG?w=260&h=260"
+                          alt
+                  />
+                  <p class="mil_item_text">觉得不对？扔个番茄</p>
+                  <p class="mil_item_text">(被扔的番茄数：{{item.disagree}})</p>
+                </div>
+              </div>
+            </div>
+            <el-pagination
+                    background
+                    layout="total, prev, pager, next, jumper"
+                    :total="allMessageList.length"
 
-          @current-change="handleChange"
-        ></el-pagination>
+                    @current-change="handleChange"
+            ></el-pagination>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </el-main>
+  </el-container>
+
 </template>
 
 <script>
@@ -109,6 +151,8 @@ export default {
       time: 0,
       allMessageList: [],
       showMessageList: [],
+      drawer: false,
+      direction: 'ltr',
     };
   },
   methods: {
@@ -137,8 +181,7 @@ export default {
           id: item.id,
           agree: item.agree,
           disagree: item.disagree,
-        }).then((res) => {
-
+        }).then(() => {
                 location.reload()
          });
     },
@@ -294,7 +337,7 @@ export default {
 .info {
   z-index: 10;
   position: fixed;
-  top: 0;
+  top: 63px;
   left: 0;
   bottom: 0;
   width: 700px;
@@ -331,4 +374,12 @@ export default {
 .info:hover {
   background-size: 110% 110%;
 }
+  .nav{
+    z-index: 999;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    margin: 0px;
+    padding: 0px;
+  }
 </style>

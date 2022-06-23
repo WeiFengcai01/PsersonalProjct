@@ -4,6 +4,14 @@ spring:
     url: jdbc:mysql://175.178.244.31/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: 20010119
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2000MB
 
 server:
   port: 8181
@@ -16,4 +24,4 @@ mybatis-plus:
   mapper-locations: classpath:com/ling/mapper/*.xml
 
 
-#mybatis的相关配置
+

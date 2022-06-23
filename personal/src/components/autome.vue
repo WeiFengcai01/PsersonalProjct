@@ -1,138 +1,100 @@
 <template>
+    <el-container>
+        <el-header class="header">
+            <el-row>
+                <el-col :span="1">
+                    <div @click="drawer = true">
+                        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                    </div>
+                </el-col>
+                <el-col :span="23">
+                    <el-aside>
+                        <el-drawer
+                                title="我是标题"
+                                :visible.sync="drawer"
+                                :direction="direction"
+                                size="300px"
+                        >
+                            <span>我来啦!</span>
+                        </el-drawer>
+                    </el-aside>
+                    <div>
+                        <el-menu
+                                :default-active="$route.path"
+                                class="el-menu-demo"
+                                mode="horizontal"
+                                @select="handleSelect" router>
+                            <template v-for="item in this.$router.options.routes" v-if="!item.hidden">
+                                <el-menu-item :index="item.path" >{{item.name}}</el-menu-item>
+                            </template>
 
-    <div>
-        <el-container>
-            <el-header>
-                <template>
-                    <el-row :gutter="20">
-                        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-                        <el-col :span="16">
-                            <el-menu
-                                    :default-active="$route.path"
-                                    class="el-menu-demo"
-                                    mode="horizontal" @select="handleSelect" router>
-                                <template v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden">
-                                    <el-menu-item :index="item.path" :key="item.path">{{item.name}}</el-menu-item>
-                                </template>
 
-                            </el-menu>
+                        </el-menu>
+                    </div>
+                </el-col>
+            </el-row>
 
 
+        </el-header>
+        <el-container class="conter">
 
+            <el-main>
+                关于我
 
-
-
-                        </el-col>
-                        <el-col :span="4">
-
-                            <div class="grid-content bg-purple">
-                                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-                                <el-dropdown trigger="click" @command="handleCommand">
-                                  <span class="el-dropdown-link">
-                                    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
-                                  </span>
-                                    <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item command="a">黄金糕</el-dropdown-item>
-                                        <el-dropdown-item command="b">狮子头</el-dropdown-item>
-                                        <el-dropdown-item command="c">螺蛳粉</el-dropdown-item>
-                                        <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
-                                        <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
-                                    </el-dropdown-menu>
-                                </el-dropdown>
-                            </div></el-col>
-                    </el-row>
-                </template>
-            </el-header>
+            </el-main>
+            <el-footer>Footer</el-footer>
 
         </el-container>
-        关于我
-    </div>
+    </el-container>
 </template>
 
 <script>
     export default {
-        name: "autome"
+        name: "home",
+        data() {
+            return {
+                drawer: false,
+                direction: 'ltr',
+            };
+        },
+
     }
+
+
 </script>
 
 <style scoped>
     .el-header, .el-footer {
         background-color: #B3C0D1;
-        color: #333;
-        text-align: center;
         line-height: 60px;
     }
 
-    .el-aside {
-        background-color: #D3DCE6;
-        color: #333;
-        text-align: center;
-        line-height: 200px;
-    }
 
     .el-main {
         background-color: #E9EEF3;
         color: #333;
-        text-align: center;
-        line-height: 160px;
-    }
-    .el-container:nth-child(5) .el-aside,
-    .el-container:nth-child(6) .el-aside {
-        line-height: 260px;
     }
 
-    .el-container:nth-child(7) .el-aside {
-        line-height: 320px;
-    }
-    .el-row {
-        margin-bottom: 20px;
-    }
+    .header{
 
-    .el-col {
-        border-radius: 4px;
     }
-    .bg-purple-dark {
-        background: #99a9bf;
+    .conter{
+        height: 92vh;
     }
-    .bg-purple {
-        background: #d3dce6;
-    }
-    .bg-purple-light {
-        background: #e5e9f2;
-    }
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
-    }
-    .text {
+    .el-carousel__item h3 {
+        color: #475669;
         font-size: 14px;
+        opacity: 0.75;
+        margin: 0;
     }
 
-    .item {
-        margin-bottom: 18px;
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
     }
 
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
-    .clearfix:after {
-        clear: both
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
     }
 
-    .box-card {
-        width: 480px;
-    }
-    .content {
-        min-height: calc(100vh - 140px);
-    }
-    .footer {
-        height: 50px;
-    }
 
 </style>

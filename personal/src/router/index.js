@@ -8,18 +8,51 @@ const routes = [
   {
     path: '/',
     name: '首页',
-    component: ()=>import("@/components/index")
-  },
+    component: ()=>import("@/components/index"),
+
+  }
+  ,
+
   {
     path: '/message',
-    name: '给我留言',
-    component: ()=>import("@/components/Message")
+    name: '留言',
+    component :()=>import('@/components/Message')
+}
+  ,
+  {
+    path: '',
+    name: '相册',
+    // component
   },
   {
-    path: '/forme',
+    path: '/autome',
     name: '关于我',
-    component: ()=>import("@/components/autome")
+    component :()=>import('@/components/autome')
+  },
+  {
+    path: '/admin',
+    meta:{
+      requireAuth:true,
+    },
+    component:()=>import('@/components/Admin/Index')
   }
+    ,{
+  path:"/admin",
+    name: '留言管理',
+    hidden:true,
+    children: [
+        {
+          path: '/message/eit',
+          name:'留言管',
+    },
+    ]
+  }
+  ,
+  {
+    path: '/login',
+    component:()=>import('@/components/Admin/login')
+  }
+
 
 ]
 
